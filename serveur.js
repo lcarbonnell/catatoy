@@ -1,18 +1,31 @@
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
 
 const Jouet = require('./jouet.js');
 const TrancheAge = require('./trancheAge');
 const Categorie = require('./categorie');
 
 //données
-let tranche02 = new TrancheAge(1,"tranche02",0,2);
-let tranche25 = new TrancheAge(2,"tranche25",2,5);
-let tranche48 = new TrancheAge(3,"tranche48",4,8);
+const app = express();
 
-let categorie1 = new Categorie(1,"Plain Air");
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies;
+
+let lesTranches=[];
+let tranche02 =  new TrancheAge(1,"tranche02",0,2);
+lesTranches.push(tranche02);
+let tranche25 =  new TrancheAge(2,"tranche25",2,5);
+lesTranches.push(tranche25);
+let tranche48 =  new TrancheAge(3,"tranche48",4,8);
+lesTranches.push(tranche48);
+
+let lesCateg =[];
+let categorie1 = new Categorie(1,"Plein Air");
+lesCateg.push(categorie1);
 let categorie2 = new Categorie(2,"Jeux d'imagination");
+lesCateg.push(categorie2);
 let categorie3 = new Categorie(3,"Jeux d'eveil");
+lesCateg.push(categorie3);
 
 let lesJouets = [];
 let unJouet1 = new Jouet(1,"Draisienne junior bleue",tranche25,categorie1);
@@ -45,15 +58,16 @@ app.get('/jouets',
         responseText += '<input type="text" name="libelle" value=""><br>';
         responseText += 'Categorie :<br>';
         responseText += '<select>';
-        responseText += `<option value="cat1"> ${categorie1.libelle}</option>`;
-        responseText += `<option value="cat2"> ${categorie2.libelle}</option>`;
-        responseText += `<option value="cat3"> ${categorie3.libelle}</option>`;
+        responseText += '<select name="categ">';
+        responseText += `<option value="1"> ${categorie1.libelle}</option>`;
+        responseText += `<option value="2"> ${categorie2.libelle}</option>`;
+        responseText += `<option value="3"> ${categorie3.libelle}</option>`;
         responseText +='</select><br>';
         responseText += 'Tranche d\'âge :<br>';
-        responseText += '<select>';
-        responseText += `<option value="t02"> ${tranche02.toString()}</option>`;
-        responseText += `<option value="t25"> ${tranche25.toString()}</option>`;
-        responseText += `<option value="t48"> ${tranche48.toString()}</option>`;
+        responseText += '<select name ="tranche">';
+        responseText += `<option value="1"> ${tranche02.toString()}</option>`;
+        responseText += `<option value="2"> ${tranche25.toString()}</option>`;
+        responseText += `<option value="3"> ${tranche48.toString()}</option>`;
         responseText +='</select><br>';
         responseText += '<input type="submit" value="Envoyer">';
         responseText += '</form>';
@@ -73,7 +87,18 @@ app.get('/jouets/:id',
         }
     });
 
+//Ajoute un jouet
+    app.post('/jouets', (req, res) => {
+          let jouetLib = req.body.libelle;
+          let categ  = req.body.categ;
+          let trancheA = req.body.tranche;
 
+              lesJouets.push(new Jouet(lesJouets.length+1,jouetLib,lesTranches[trancheA-1],lesCateg[categ-1]));
+          console.log("Jouet ajouté");
+          res.redirect('/jouets');
+
+
+                });
 
 
 
