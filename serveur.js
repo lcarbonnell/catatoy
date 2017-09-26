@@ -28,7 +28,7 @@ app.get('/',function(req,res) {
     let ResponseText = 'Bienvenue dans le catalogue de jouets'
     res.send(ResponseText);
 });
-app.get('./jouets',
+app.get('/jouets',
     (req, res) => {
     let responseText = 'Voici la liste des jouets </br>';
     lesJouets.forEach(
