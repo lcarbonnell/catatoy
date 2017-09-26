@@ -1,15 +1,8 @@
-const Jouet =require('./Jouet.js');
-const TrancheAge = require('./trancheAge.js');
-const Categorie = require('./categorie');
+const express = require('express');
+const app = express();
 
-//console.log('bienvenue dans le catalogue de jouet');
+app.get('/',function(req,res) {
+    res.send('Bienvenue dans le catalogue de jouet');
+});
 
-let tranche25 = new TrancheAge("tranche",2,5);
-//console.log(tranche25.toString());
-
-let categorie1 = new Categorie("Plein Air");
-//console.log(categorie1.libelle);
-
-let unJouet = new Jouet("draisienne junior bleu",tranche25,categorie1);
-//console.log(unJouet.trancheAge);
-categorie1.afficherJouets(console.log);
+app.listen(8081);

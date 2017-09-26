@@ -24,4 +24,4 @@ const Jouet = require('../jouet.js');
 
 
                             });
-        }); 
+        });
