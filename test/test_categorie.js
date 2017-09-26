@@ -14,7 +14,7 @@ const Jouet = require('../jouet.js');
                             before(function () {
                                     categorie1 = new Categorie("Plein Air");
                                     tranche25 =  new TrancheAge("tranche25",2,5);
-                                    unJouet = new Jouet("Draisienne junior bleue",tranche25,categorie1);
+                                    unJouet = new Jouet(1,"Draisienne junior bleue",tranche25,categorie1);
                                 });
 
                             it("Ajout d'un jouet",() => {

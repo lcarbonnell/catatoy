@@ -14,13 +14,13 @@ let categorie2 = new Categorie("Jeux D'imagination");
 let categorie3 = new Categorie("Jeux D'éveil");
 
 let lesJouets = [];
-let unJouet1 = new Jouet("Draisienne junior bleue",tranche25,categorie1);
+let unJouet1 = new Jouet(1,"Draisienne junior bleue",tranche25,categorie1);
 lesJouets.push(unJouet1);
 
-let unJouet2 = new Jouet("trottinette  ... ",tranche48,categorie1);
+let unJouet2 = new Jouet(2,"trottinette  ... ",tranche48,categorie1);
 lesJouets.push(unJouet2);
 
-let unJouet3 = new Jouet("Atelier de bricolage Tap Tap véhicule",tranche48,categorie2);
+let unJouet3 = new Jouet(3,"Atelier de bricolage Tap Tap véhicule",tranche48,categorie2);
 lesJouets.push(unJouet3);
 
 //ROUTES
@@ -29,14 +29,32 @@ app.get('/',function(req,res) {
     res.send(ResponseText);
 });
 app.get('/jouets',
-    (req, res) => {
-    let responseText = 'Voici la liste des jouets </br>';
-    lesJouets.forEach(
-        (unJouet)=> {responseText +=` Jouet : ${unJouet.libelle}</br>`;}
-    );
-    res.send(responseText)
+    (req,res) =>  {
+        let responseText = 'Voici la liste des jouets </br>';
+        lesJouets.forEach(
+            (unJouet) => {responseText += `Jouet : ${unJouet.libelle}  </br>`;}
+        );
+        res.send(responseText);
     }
 );
+
+//Affiche le jouet d'id :id
+    app.get('/jouets/:id',
+            (req, res) => {
+
+            let id=req.params.id;
+
+                if (id < lesJouets.length+1){
+                    let responseText = `Jouet : ${lesJouets[id-1].libelle}`;
+                    res.send(responseText);
+                }
+            else
+            {
+                res.status(404).send('Sorry ! Toy doesn\'t exist');
+            }
+    });
+
+
 
 //Demerrage du serveur
 
