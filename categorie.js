@@ -1,5 +1,6 @@
 class Categorie{
-    constructor(unLibelle){
+    constructor(unId,unLibelle){
+        this._id = unId;
         this._libelle = unLibelle;
         this._lesJouets = [];
     }
@@ -17,6 +18,6 @@ class Categorie{
     get_nb_jouets(){
         return this._lesJouets.length;
     }
-    
+
 }
 module.exports = Categorie;
